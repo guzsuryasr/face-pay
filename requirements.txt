@@ -1,5 +1,8 @@
 streamlit
-numpy
-pandas
 opencv-python
-Pillow
+numpy
+mtcnn
+tensorflow
+bcrypt
+pandas
+sqlalchemy
