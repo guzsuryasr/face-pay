@@ -33,24 +33,47 @@ face pay sistem
 
 ## 🗂️ Struktur Folder
 
-facepay/
-│
-├── user_frontend.py # GUI untuk pengguna (registrasi, bayar, top up)
-├── admin_dashboard.py # Dashboard admin
-├── user_db.py # Logika backend pengguna & admin
-├── init_db.py # Setup database SQLite awal
-├── embeddings_db.npy # Embedding wajah
-├── users.json # Metadata pengguna
-├── requirements.txt # Dependensi
-├── README.md
-│
-├── assets/ # Foto wajah pengguna
-├── logs/ # (Opsional) Log file eksternal
-└── .streamlit/
-└── config.toml # Konfigurasi Streamlit Cloud
+<pre> 📁 <b>facepay/</b> ├── <b>user_frontend.py</b> # Antarmuka pengguna (registrasi, top up, bayar) ├── <b>admin_dashboard.py</b> # Dashboard admin (log, reset PIN, autentikasi) ├── <b>user_db.py</b> # Backend logika (pengguna, transaksi, PIN) ├── <b>init_db.py</b> # Inisialisasi database SQLite ├── <b>users.json</b> # Data pengguna (nama, PIN hash, saldo) ├── <b>embeddings_db.npy</b> # Embedding wajah pengguna (FaceNet) ├── <b>requirements.txt</b> # Daftar dependensi Python ├── <b>README.md</b> # Dokumentasi proyek │ ├── 📁 <b>assets/</b> # Foto wajah pengguna │ └── user_id_123.jpg │ ├── 📁 <b>logs/</b> # File log eksternal (jika ada) │ └── activity_2025-05-09.csv │ └── 📁 <b>.streamlit/</b> # Konfigurasi untuk Streamlit Cloud └── config.toml </pre>
 
 
 ---
+
+## 🧠 Arsitektur Sistem FacePay
+Sistem ini dibagi menjadi dua peran utama: User dan Admin, dengan proses yang saling terhubung menggunakan pengenalan wajah, verifikasi PIN, dan manajemen log berbasis SQLite.
+
+┌──────────────────────┐
+│    📷 Webcam Input    │
+└────────┬─────────────┘
+         ▼
+┌────────────────────────────┐
+│ 🎯 MTCNN - Deteksi Wajah   │
+└────────┬───────────────────┘
+         ▼
+┌────────────────────────────┐
+│ 🔍 FaceNet - Ekstrak       │
+│     Embedding Wajah        │
+└────────┬───────────────────┘
+         ▼
+┌────────────────────────────┐
+│ 🔐 Pencocokan Embedding    │◄──────────────┐
+│ atau Verifikasi PIN (6 digit)            │
+└────────┬───────────────────┘             │
+         ▼                                 │
+┌────────────────────────────┐             │
+│ 💳 Proses Pembayaran / Top Up │             │
+└────────┬───────────────────┘             │
+         ▼                                 │
+┌────────────────────────────┐             │
+│ 📝 Logging ke SQLite + CSV │             │
+└────────┬────────────┬──────┘             │
+         ▼            ▼                    │
+   User Frontend   Admin Dashboard         │
+   (Streamlit UI)  (Streamlit UI)          │
+         │            │                    │
+         ▼            ▼                    │
+ [Registrasi]    [Lihat Log, Reset PIN]────┘
+
+------------------------------------------------------------
 
 ## ⚙️ Instalasi & Setup Lokal
 
@@ -75,17 +98,6 @@ Username: admin
 Password: admin123
 
 Ganti password setelah deploy!
-
-## ☁️ Deploy ke Streamlit Cloud
-Buat repo GitHub
-
-Upload semua file
-
-Di Streamlit Cloud, klik "New App"
-
-Pilih repo, set user_frontend.py atau admin_dashboard.py sebagai entrypoint
-
-Jalankan dan uji!
 
 ## 📸 Teknologi yang Digunakan
 Streamlit
