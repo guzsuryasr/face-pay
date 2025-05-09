@@ -67,7 +67,7 @@ streamlit run user_frontend.py
 
 streamlit run admin_dashboard.py
 
-🔒 Autentikasi
+## 🔒 Autentikasi
 Default admin:
 
 Username: admin
@@ -76,7 +76,7 @@ Password: admin123
 
 Ganti password setelah deploy!
 
-☁️ Deploy ke Streamlit Cloud
+## ☁️ Deploy ke Streamlit Cloud
 Buat repo GitHub
 
 Upload semua file
@@ -87,7 +87,7 @@ Pilih repo, set user_frontend.py atau admin_dashboard.py sebagai entrypoint
 
 Jalankan dan uji!
 
-📸 Teknologi yang Digunakan
+## 📸 Teknologi yang Digunakan
 Streamlit
 
 OpenCV
